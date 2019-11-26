@@ -2,7 +2,7 @@
 
 > **this is not a real shell** , it's just an environment to use in web apps/sites instead of using buttons
 
-![](shell-gif.gif)
+![](https://github.com/ashkan-nasirzadeh/simpleShell/tree/master/README%20assets/shell-gif.gif)
 
 ---
 
