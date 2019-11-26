@@ -77,3 +77,7 @@ var shellObj = {
 *AND IT'S DONE :*
 
 ![shell-gif2](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif2.gif?raw=true)
+
+### ToDo:
+1- get function args from commands
+2- get function args from user
