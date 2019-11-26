@@ -2,7 +2,7 @@
 
 > **this is not a real shell** , it's just an environment to use in web apps/sites instead of using buttons
 
-![shell-gif](README assets\shell-gif.gif)
+![](README assets\shell-gif.gif)
 
 ---
 
