@@ -2,7 +2,7 @@
 
 > **this is not a real shell** , it's just an environment to use in web apps/sites instead of using buttons
 
-![shell-gif](C:\Users\ashkan nasirzadeh\Desktop\shell\README assets\shell-gif.gif)
+![shell-gif](README assets\shell-gif.gif)
 
 ---
 
@@ -76,4 +76,4 @@ var shellObj = {
 
 *AND IT'S DONE :*
 
-![shell-gif2](C:\Users\ashkan nasirzadeh\Desktop\shell\README assets\shell-gif2.gif)
+![shell-gif2](README assets\shell-gif2.gif)
