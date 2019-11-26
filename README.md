@@ -76,4 +76,4 @@ var shellObj = {
 
 *AND IT'S DONE :*
 
-![shell-gif2](README assets\shell-gif2.gif)
+![shell-gif2](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif2.gif?raw=true)
