@@ -11,11 +11,14 @@ var shellObj = {
         'cls': ['commandCls', ''],
         'clear': ['commandCls', ''],
         'change bg --red': ['bgChanger', 'red'],
-        'change bg --blue': ['bgChanger', 'blue']
+        'change bg --blue': ['bgChanger', 'blue'],
+        'change bg': ['bgChanger', 'prompt', ['color:', 'success message:', 'fail message:']]
     }
 },
 commandsHistory = [],
-counter1;
+counter1,
+counter2 = [0, ''],
+infoFromUser = [];
 
 function commandHelp() {
     var win = window.open('https://www.google.com', '_blank');
@@ -34,8 +37,13 @@ function makeAShell(container) {
     makeAPrompt(container);
     let dialog1 = $('<dialog id="myDialog">This is a dialog window</dialog>').appendTo(container);
 }
-function makeAPrompt (container) {
-    let prompt_c = $('<div><b>'+shellObj['prompt-sign']+'</b><pre> </pre></div>').appendTo(container);
+function makeAPrompt (container, prompt = '', parentCommand = '') { // shell-c color ''
+    let prompt_c;
+    if (prompt === '') {
+        prompt_c = $('<div><b>'+shellObj['prompt-sign']+'</b><pre> </pre></div>').appendTo(container);
+    } else {
+        prompt_c = $('<div><b>'+prompt+'</b><pre> </pre></div>').appendTo(container);
+    }
     $(prompt_c).css({
         position: 'relative',
         border: '1px solid black',
@@ -70,10 +78,16 @@ function makeAPrompt (container) {
         let command = $(this).html();
         if (event.keyCode == 13) {
             event.preventDefault();
-            commandsHistory.push(command);
-            counter1 = commandsHistory.length;
-            counter2 = 0;
-            makeAnAnswer(command, container);
+            if (prompt !== '' && parentCommand !== '') {
+                makeAnAnswer(infoFromUser, container, parentCommand);
+            } else if (prompt !== '' && parentCommand === '') {
+                infoFromUser.push(command);
+                makeAnAnswer(counter2[1], 'prompt');
+            } else {
+                commandsHistory.push(command);
+                counter1 = commandsHistory.length;
+                makeAnAnswer(command, container); // change bg, #shell-c
+            }
         }
     });
     $(prompt_command).keydown(function (event) {
@@ -88,14 +102,40 @@ function makeAPrompt (container) {
         }
     });
 }
-function makeAnAnswer(command, container) {
+function makeAnAnswer(command, container, parentCommand = false) {
     $('.prompt-command-class').attr('contenteditable', 'false');
     let commandsObj = shellObj['commands'];
+    if (parentCommand !== false) {
+        try {
+            let jsonVal = commandsObj[parentCommand][0];
+            let arg = infoFromUser;
+            if (arg !== 'prompt') {
+                showAnswer(eval(jsonVal)(arg), container);
+                return;
+            }
+        } catch (e) {
+            showAnswer(`an error has occured <br> ${e}`, container);
+            return;
+        }
+    }
     try {
-        let jsonVal = commandsObj[command][0];
-        let ifArg = commandsObj[command][1];
-        showAnswer(eval(jsonVal)(ifArg), container);
-        return;
+        let jsonVal = commandsObj[command][0]; // bgChanger
+        let arg = commandsObj[command][1]; // prompt
+        if (arg !== 'prompt') {
+            showAnswer(eval(jsonVal)(arg), container);
+            return;
+        } else if (arg === 'prompt') {
+            if (counter2[0] == commandsObj[command][2].length) {
+                makeAnAnswer('', shellObj['shell-container'], counter2[1]); //command is the same parentCommand now! // #shell-c, color, ''
+                counter2[0] = 0;
+                counter2[1] = '';
+                infoFromUser = [];
+            } else {
+                makeAPrompt(shellObj['shell-container'], commandsObj[command][2][counter2[0]]); //command is the same parentCommand now! // #shell-c, color, ''
+                counter2[0] += 1;
+                counter2[1] = command; // TODO: over one arg and its a problem
+            }
+        }
     } catch (e) {
         try {
             let jsonVal = commandsObj[command][0];
