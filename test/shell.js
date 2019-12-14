@@ -12,9 +12,9 @@ var shellObj = {
         'cls': ["commandCls", ""],
         'clear': ["commandCls", ""],
         'change bg': ["bgChanger", "prompt", ["color:", "success message:", "fail message:"]],
-        'change bg': ["bgChanger", "autoPrompt", ["color:", "success message:", "fail message:"]],
+        'cbb': ["bgChanger", "autoPrompt", ["dodgerblue", "OK good job", "oh no"]],
         'alias -soft': ["aliasSoft", "prompt", ["command:", "alias:"]],
-        'alias -hard': ["aliasHard", "prompt", ["command:", "alias:"]]
+        'alias -hard': ["aliasHard", "prompt", ["command:", "alias:", "arguments:"]]
     }
 },
 commandsHistory = [],
@@ -119,7 +119,7 @@ function makeAnAnswer(command, container, parentCommand = false) {
     try {
         let jsonVal = commandsObj[command][0]; // bgChanger
         let arg = commandsObj[command][1]; // prompt
-        if (arg !== 'prompt') {
+        if (arg !== 'prompt' && arg !== 'autoPrompt') {
             showAnswer(eval(jsonVal)(arg), container);
             return;
         } else if (arg === 'prompt') {
@@ -133,6 +133,10 @@ function makeAnAnswer(command, container, parentCommand = false) {
                 counter2[0] += 1;
                 counter2[1] = command; // TODO: over one arg and its a problem
             }
+        } else if (arg === 'autoPrompt') {
+            infoFromUser = commandsObj[command][2];
+            makeAnAnswer('', shellObj['shell-container'], command);
+            infoFromUser = [];
         }
     } catch (e) {
         try {
@@ -179,16 +183,16 @@ function aliasSoft (backedArr) {
     if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
     // let situation = shellObj['commands'][command][1] == 'prompt' ? 'hard' : 'soft';
     shellObj['commands'][newCommand] = shellObj['commands'][command];
-    console.log(shellObj['commands']);
     return 'alias has set';
 }
 function aliasHard (backedArr) {
     let command = backedArr[0];
     let newCommand = backedArr[1];
+    let args = backedArr[2];
+    args = args.split(',');
     if (shellObj['commands'][command] === undefined) return 'the command you try to make alias from doesn\'t exists';
     if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
-    // let situation = shellObj['commands'][command][1] == 'prompt' ? 'hard' : 'soft';
-    shellObj['commands'][newCommand] = shellObj['commands'][command];
+    shellObj['commands'][newCommand] = [shellObj['commands'][command][0], 'autoPrompt', args];
     console.log(shellObj['commands']);
     return 'alias has set';
 }

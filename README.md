@@ -2,7 +2,7 @@
 
 > **this is not a real shell** , it's just an environment to use in web apps/sites instead of using buttons
 
-![](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif.gif?raw=true)
+![how to use a terminal/shell in web sites/apps](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif.gif?raw=true)
 
 ---
 
@@ -76,7 +76,7 @@ var shellObj = {
 
 *AND IT'S DONE :*
 
-![shell-gif2](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif2.gif?raw=true)
+![how to use simpleShell with options](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif2.gif?raw=true)
 
 ---
 
@@ -152,4 +152,12 @@ var shellObj = {
 
 and this is output:
 
-![shell-gif2](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif3.gif?raw=true)
+![how to set arguments for a simpleShell command](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif3.gif?raw=true)
+
+---
+
+## version 1.3.0
+
+now alias are available, use `alias -soft` if you just want to change the text of the command or use `alias -hard` if the command has some arguments and you want to also set the arguments:
+
+![how to make alias in simpleShell](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif4.gif?raw=true)
