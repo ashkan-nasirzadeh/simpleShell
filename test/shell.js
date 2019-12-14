@@ -5,15 +5,16 @@ var shellObj = {
     'prompt-sign-color': 'lime',
     'prompt-answer-color': 'yellow',
     'commands': {
-        'hello': ['hi', []],
-        'longtext': ['Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', ''],
-        'how are you': ['im fine thanks', ''],
-        'help': ['commandHelp', ''],
-        'cls': ['commandCls', ''],
-        'clear': ['commandCls', ''],
-        'change bg --red': ['bgChanger', 'red'],
-        'change bg --blue': ['bgChanger', 'blue'],
-        'change bg': ['bgChanger', 'prompt', ['color:', 'success message:', 'fail message:']]
+        'hello': ["hi", []],
+        'longtext': ["Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ""],
+        'how are you': ["im fine thanks", ""],
+        'help': ["commandHelp", ""],
+        'cls': ["commandCls", ""],
+        'clear': ["commandCls", ""],
+        'change bg': ["bgChanger", "prompt", ["color:", "success message:", "fail message:"]],
+        'change bg': ["bgChanger", "autoPrompt", ["color:", "success message:", "fail message:"]],
+        'alias -soft': ["aliasSoft", "prompt", ["command:", "alias:"]],
+        'alias -hard': ["aliasHard", "prompt", ["command:", "alias:"]]
     }
 },
 commandsHistory = [],
@@ -31,14 +32,10 @@ function commandCls() {
     return '';
 }
 function makeAShell(container) {
-    $(container).css({
-        // border: "1px solid red"
-    });
     $(container).css('background-color', shellObj['background-color']);
     makeAPrompt(container);
-    let dialog1 = $('<dialog id="myDialog">This is a dialog window</dialog>').appendTo(container);
 }
-function makeAPrompt (container, prompt = '', parentCommand = '') { // shell-c color ''
+function makeAPrompt (container, prompt = '', parentCommand = '') {
     let prompt_c;
     if (prompt === '') {
         prompt_c = $('<div><b>'+shellObj['prompt-sign']+'</b><pre> </pre></div>').appendTo(container);
@@ -175,4 +172,25 @@ function showAnswer(answer, container) {
     });
     makeAPrompt(shellObj['shell-container']);
 }
+function aliasSoft (backedArr) {
+    let command = backedArr[0];
+    let newCommand = backedArr[1];
+    if (shellObj['commands'][command] === undefined) return 'the command you try to make alias from doesn\'t exists';
+    if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
+    // let situation = shellObj['commands'][command][1] == 'prompt' ? 'hard' : 'soft';
+    shellObj['commands'][newCommand] = shellObj['commands'][command];
+    console.log(shellObj['commands']);
+    return 'alias has set';
+}
+function aliasHard (backedArr) {
+    let command = backedArr[0];
+    let newCommand = backedArr[1];
+    if (shellObj['commands'][command] === undefined) return 'the command you try to make alias from doesn\'t exists';
+    if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
+    // let situation = shellObj['commands'][command][1] == 'prompt' ? 'hard' : 'soft';
+    shellObj['commands'][newCommand] = shellObj['commands'][command];
+    console.log(shellObj['commands']);
+    return 'alias has set';
+}
+
 makeAShell(shellObj['shell-container']);

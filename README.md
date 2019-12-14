@@ -145,8 +145,6 @@ var shellObj = {
         'help': ['commandHelp', ''],
         'cls': ['commandCls', ''],
         'clear': ['commandCls', ''],
-        'change bg --red': ['bgChanger', 'red'],
-        'change bg --blue': ['bgChanger', 'blue'],
         'change bg': ['bgChanger', 'prompt', ['color:', 'success message:', 'fail message:']]
     }
 }
