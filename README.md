@@ -185,3 +185,9 @@ now alias are available, use `alias -soft` if you just want to change the text o
 now you can use  `ctrl+c` to exit from a command:
 
 ![how to use ctrl+c to exit from a command in simpleShell](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif5.gif?raw=true)
+
+---
+
+#### todo:
+
+- [ ] cursor should point the end of the command input
