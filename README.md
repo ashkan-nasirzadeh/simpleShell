@@ -191,3 +191,5 @@ now you can use  `ctrl+c` to exit from a command:
 #### todo:
 
 - [ ] cursor should point the end of the command input
+
+- [ ] delete and managing alias
