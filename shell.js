@@ -5,17 +5,17 @@ var shellObj = {
     'prompt-sign-color': 'lime',
     'prompt-answer-color': 'yellow',
     'commands': {
-        'hello': ["hi", []],
-        'longtext': ["Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ""],
-        'how are you': ["im fine thanks", ""],
-        'help': ["commandHelp", ""],
+        'alias -soft': ["aliasSoft", "prompt", ["command:", "alias:"]],
+        'alias -hard': ["aliasHard", "prompt", ["command:", "alias:", "arguments:"]],
         'cancelCommand': ["canceled", []],
+        'cbb': ["bgChanger", "autoPrompt", ["dodgerblue", "OK good job", "oh no"]],
+        'change bg': ["bgChanger", "prompt", ["color:", "success message:", "fail message:"]],
         'cls': ["commandCls", ""],
         'clear': ["commandCls", ""],
-        'change bg': ["bgChanger", "prompt", ["color:", "success message:", "fail message:"]],
-        'cbb': ["bgChanger", "autoPrompt", ["dodgerblue", "OK good job", "oh no"]],
-        'alias -soft': ["aliasSoft", "prompt", ["command:", "alias:"]],
-        'alias -hard': ["aliasHard", "prompt", ["command:", "alias:", "arguments:"]]
+        'hello': ["hi", []],
+        'help': ["commandHelp", ""],
+        'how are you': ["im fine thanks", ""],
+        'longtext': ["Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ""]
     }
 },
 commandsHistory = [],
@@ -194,7 +194,6 @@ function aliasHard (backedArr) {
     if (shellObj['commands'][command] === undefined) return 'the command you try to make alias from doesn\'t exists';
     if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
     shellObj['commands'][newCommand] = [shellObj['commands'][command][0], 'autoPrompt', args];
-    console.log(shellObj['commands']);
     return 'alias has set';
 }
 function ctrlc () {
