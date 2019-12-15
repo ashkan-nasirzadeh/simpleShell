@@ -184,6 +184,7 @@ function aliasSoft (backedArr) {
     if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
     // let situation = shellObj['commands'][command][1] == 'prompt' ? 'hard' : 'soft';
     shellObj['commands'][newCommand] = shellObj['commands'][command];
+    syncAlias();
     return 'alias has set';
 }
 function aliasHard (backedArr) {
@@ -191,9 +192,13 @@ function aliasHard (backedArr) {
     let newCommand = backedArr[1];
     let args = backedArr[2];
     args = args.split(',');
+    args.forEach(function (v, i) {
+        if (v == null || v == 'null' || v == '' || v == ' ' || v == "&nbsp;") args[i] = '';
+    });
     if (shellObj['commands'][command] === undefined) return 'the command you try to make alias from doesn\'t exists';
     if (shellObj['commands'][newCommand] !== undefined) return 'the alias command exists';
     shellObj['commands'][newCommand] = [shellObj['commands'][command][0], 'autoPrompt', args];
+    syncAlias();
     return 'alias has set';
 }
 function ctrlc () {
@@ -204,6 +209,8 @@ function ctrlc () {
         counter2 = [0, ''];
         makeAnAnswer('cancelCommand', shellObj['shell-container']);
     };
+}
+function syncAlias () {
 }
 makeAShell(shellObj['shell-container']);
 ctrlc();
