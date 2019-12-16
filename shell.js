@@ -94,12 +94,21 @@ function makeAPrompt (container, prompt = '', parentCommand = '') {
             event.preventDefault();
             counter1 = counter1 >= 1 ? counter1 -= 1 : counter1 = commandsHistory.length - 1;
             $(this).html(commandsHistory[counter1]);
+            posAtEnd(this);
         } else if (event.keyCode == 40){
             event.preventDefault();
             counter1 = counter1 < commandsHistory.length - 1 ? counter1 += 1 : counter1 = 0;
             $(this).html(commandsHistory[counter1]);
+            posAtEnd(this);
         }
     });
+}
+function posAtEnd (el) {
+    let sel = document.getSelection();
+    range = sel.getRangeAt(0);
+    range.setStart(el, 0);
+    range.setEnd(el, 1);
+    range.collapse();
 }
 function makeAnAnswer(command, container, parentCommand = false) {
     $('.prompt-command-class').attr('contenteditable', 'false');

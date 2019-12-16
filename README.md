@@ -1,4 +1,4 @@
-# simple shell for web apps/sites
+simple shell for web apps/sites
 
 > **this is not a real shell** , it's just an environment to use in web apps/sites instead of using buttons
 
@@ -12,13 +12,16 @@
 
 | version\OS | tested on windows | tested on Debian | tested on macOS | tested on FreeBSD |
 | :--------: | :---------------: | :--------------: | :-------------: | :---------------: |
-|   1.0.0    |     &#10004;      |     &times;      |     &times;     |      &times;      |
-|   1.2.0    |     &#10004;      |     &times;      |     &times;     |      &times;      |
-|   1.2.1    |     &#10004;      |     &times;      |     &times;     |      &times;      |
-|   1.3.0    |     &#10004;      |     &times;      |     &times;     |      &times;      |
-|   1.5.0    |     &#10004;      |     &times;      |     &times;     |      &times;      |
+|   1.0.*    |     &#10004;      |     &cross;      |     &cross;     |      &cross;      |
+|   1.2.*    |     &#10004;      |     &cross;      |     &cross;     |      &cross;      |
+|   1.2.*    |     &#10004;      |     &cross;      |     &cross;     |      &cross;      |
+|   1.3.*    |     &#10004;      |     &cross;      |     &cross;     |      &cross;      |
+|   1.5.*    |     &#10004;      |     &cross;      |     &cross;     |      &cross;      |
+|   1.6.*    |     &#10004;      |     &cross;      |     &cross;     |      &cross;      |
 
-![#c5f015](https://placehold.it/15/c5f015/000000?text=+) **this application is on maintenance in 2019**
+![#c5f015](https://placehold.it/15/c5f015/000000?text=+) **this application is alive in 2019**
+
+please report any bug or request any feature in issues tab, I will settle it down soon .
 
 ---
 
@@ -185,6 +188,12 @@ now alias are available, use `alias -soft` if you just want to change the text o
 now you can use  `ctrl+c` to exit from a command:
 
 ![how to use ctrl+c to exit from a command in simpleShell](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif5.gif?raw=true)
+
+---
+
+## version 1.6.0
+
+now caret is at end when scrolling in commands happens
 
 ---
 
