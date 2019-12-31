@@ -197,6 +197,14 @@ now caret is at end when scrolling in commands happens
 
 ---
 
+## version 1.8.0
+
+auto-command added:
+
+![how to use auto command in simpleShell](https://github.com/ashkan-nasirzadeh/simpleShell/blob/master/README%20assets/shell-gif6.gif?raw=true)
+
+---
+
 #### todo:
 
 - [ ] cursor should point the end of the command input

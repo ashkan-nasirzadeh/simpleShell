@@ -7,6 +7,7 @@ var shellObj = {
     'commands': {
         'alias -soft': ["aliasSoft", "prompt", ["command:", "alias:"]],
         'alias -hard': ["aliasHard", "prompt", ["command:", "alias:", "arguments:"]],
+        'alias -delete': ["aliasDelete", "prompt", ["alias:"]],
         'cancelCommand': ["canceled", []],
         'cbb': ["bgChanger", "autoPrompt", ["dodgerblue", "OK good job", "oh no"]],
         'change bg': ["bgChanger", "prompt", ["color:", "success message:", "fail message:"]],
@@ -22,7 +23,64 @@ commandsHistory = [],
 counter1,
 counter2 = [0, ''],
 infoFromUser = [];
-
+var autoCommand = {
+    a:null,
+    i:0,
+    j:0,
+    cmd: '',
+    Queue: [],
+    Perm: true,
+    add: function (cmd, answer = false) {
+        if (answer == false) {
+            this.Queue.push(cmd);
+        } else {
+            this.Queue.push(cmd);
+            shellObj.commands[cmd] = [answer, []];
+        }
+    },
+    type: function (cmd) {
+        if (this.i == cmd.length) {
+            this.pressEnter();
+            this.a = null;
+            this.i = 0;
+        } else {
+            this.cmd = cmd;
+            autoCommand.i += 1;
+            this.typeCmd(cmd);
+            this.a = setTimeout(function () {autoCommand.type(cmd);}, 30);
+        }
+    },
+    pressEnter: function () {
+        $('.prompt-command-class').last().focus();
+        $(function() {
+            var e = $.Event('keypress');
+            e.which = 13; // Character 'A'
+            e.keyCode = 13;
+            $('.prompt-command-class').last().trigger(e);
+        });
+    },
+    typeCmd: function (cmd) {
+        let oldVal = $('.prompt-command-class').last().html();
+        let newLetter = cmd.slice(this.i - 1,this.i);
+        let newVal = oldVal + newLetter;
+        $('.prompt-command-class').last().html(newVal);
+    },
+    run: function () {
+        if (autoCommand.j + 1 <= autoCommand.Queue.length) {
+            $('.prompt-command-class').last().html('');
+            autoCommand.type(autoCommand.Queue[autoCommand.j]);
+            autoCommand.j += 1;
+        } else {
+            this.Queue = [];
+            autoCommand.j = 0;
+        }
+    },
+    finalizingCommand: function () {
+        delete shellObj.commands[this.cmd];
+        this.cmd = '';
+        this.run();
+    }
+}
 function commandHelp() {
     var win = window.open('https://www.google.com', '_blank');
     win.focus();
@@ -210,6 +268,31 @@ function aliasHard (backedArr) {
     syncAlias();
     return 'alias has set';
 }
+function aliasDelete (backedArr) {
+    return 'not available when using simple shell in chrome';
+    // try {
+    //     let alias = backedArr[0];
+    //     console.log(alias);
+    //     let readedFromUserAlias;
+    //     let jsonForSyncOld;
+    //     readedFromUserAlias = fs.readFileSync("user-alias.json", 'utf8');
+    //     try {
+    //         jsonForSyncOld = JSON.parse(readedFromUserAlias);
+    //     } catch (e) {
+    //         dialog.showMessageBoxSync({type:"warning", message: "Dear user, it seems that you destroyed or modified \'user-alias.json\'! please reverse your changes and then reload application"});
+    //         return;
+    //     }
+    //     try {
+    //         delete jsonForSyncOld[alias];
+    //         delete shellObj.commands[alias];
+    //         fs.writeFileSync("user-alias.json", JSON.stringify(jsonForSyncOld));
+    //     } catch (e) {
+    //         return e;
+    //     }
+    // } catch {
+    //     return 'an error has occured';
+    // }
+}
 function ctrlc () {
     document.onkeyup = function(e) {
         let key = e.which || e.keyCode;
@@ -219,7 +302,33 @@ function ctrlc () {
         makeAnAnswer('cancelCommand', shellObj['shell-container']);
     };
 }
-function syncAlias () {
+function syncAlias (jsonForSync = false) {
+    //save your alias in a file for further use...
+    // let jsonForSyncNew;
+    // let readedFromUserAlias;
+    // let jsonForSyncOld;
+    // readedFromUserAlias = fs.readFileSync("user-alias.json", 'utf8');
+    // try {
+    //     jsonForSyncOld = JSON.parse(readedFromUserAlias);
+    // } catch (e) {
+    //     dialog.showMessageBoxSync({type:"warning", message: "Dear user, it seems that you destroyed or modified \'user-alias.json\'! please reverse your changes and then reload application"});
+    //     return;
+    // }
+    // if (jsonForSync !== false) {
+    //     jsonForSyncNew = JSON.parse(jsonForSync);
+    //     try {
+    //         jsonForSyncOld = JSON.parse(readedFromUserAlias);
+    //     } catch (e) {
+    //         alert('Dear user, it seems that you destroyed or modified \'user-alias.json\'! please reverse your changes');
+    //         console.log(e);
+    //     }
+    //     fs.writeFileSync("user-alias.json", JSON.stringify(Object.assign(jsonForSyncNew, jsonForSyncOld)));
+    //     return;
+    // }
+    // shellObj['commands'] = Object.assign(jsonForSyncOld, shellObj['commands']);
+    // return;
 }
 makeAShell(shellObj['shell-container']);
 ctrlc();
+autoCommand.add('answer me how are you', 'how are you!!!');
+autoCommand.run();
